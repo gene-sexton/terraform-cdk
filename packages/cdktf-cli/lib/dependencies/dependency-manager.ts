@@ -34,7 +34,7 @@ export class ProviderConstraint {
    */
   public readonly source: string;
 
-  // TODO: parse the version constraint, add examples to cli command description (i.e. =,~>.> etc.)
+  // TODO: add examples to cli command description (i.e. =,~>.> etc.)
   // if no version constraint is specified, we assume the latest version
   // if specific version is specified without e.g. =, we allow patch level increments (e.g. ~>2.12 for "2.12")
   constructor(source: string, public readonly version: string | undefined) {
@@ -155,11 +155,13 @@ export class DependencyManager {
     const v = await getPrebuiltProviderVersion(constraint);
     const exists = v !== undefined;
 
-    console.log(
-      `Pre-built provider ${
-        exists ? "does" : "does not"
-      } exist for the given constraints.`
-    );
+    if (exists) {
+      console.log(`Found pre-built provider.`);
+    } else {
+      console.log(
+        `Pre-built provider does not exist for the given constraints.`
+      );
+    }
 
     return exists;
   }

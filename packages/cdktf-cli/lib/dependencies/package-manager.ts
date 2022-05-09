@@ -48,8 +48,6 @@ class NodePackageManager extends PackageManager {
     packageName: string,
     packageVersion?: string
   ): Promise<void> {
-    console.log(`Adding package ${packageName} @ ${packageVersion}`);
-
     // probe for package-lock.json or yarn.lock
     let command = "npm";
     let args = ["install"];
@@ -63,6 +61,10 @@ class NodePackageManager extends PackageManager {
     );
 
     await exec(command, args, { cwd: this.workingDirectory });
+
+    console.log(
+      `Installed package ${packageName} @ ${packageVersion} using ${command}.`
+    );
   }
 }
 
